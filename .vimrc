@@ -4,7 +4,6 @@ autocmd!
 execute pathogen#infect()
 execute pathogen#helptags()
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CORE EDITING SETTINGS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -39,7 +38,7 @@ set showmatch
 set incsearch
 set hlsearch
 set ignorecase smartcase
-set cursorline
+"set cursorline
 set cmdheight=1
 set switchbuf=useopen
 set winwidth=79
@@ -57,8 +56,8 @@ filetype indent on
 " Colorscheme
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-set background=dark
-colorscheme solarized
+"set background=dark
+"colorscheme solarized
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -68,29 +67,79 @@ colorscheme solarized
 
 " NERDtree
 map <C-n> :NERDTreeToggle<CR>
+"map <Leader>n :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 
 " syntastic
+map <Leader>s :SyntasticToggleMode<CR>
+
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 let g:syntastic_python_checkers = ['pep8']
 let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_w = 1
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 0
+"let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
 
 
 " vim-airline
-let g:airline_powerline_fonts = 1
-function! AirlineInit()
-    let g:airline_section_b = airline#section#create(['branch'])
-    let g:airline_section_c = '%<%t%m'
-    let g:airline_section_warning = airline#section#create(['syntastic'])
-endfunction
-autocmd VimEnter * if exists(':AirlineToggle') | call AirlineInit()
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+let g:airline_symbols.space = "\ua0"
+"let g:airline_powerline_fonts = 1
+"function! AirlineInit()
+"    let g:airline_section_b = airline#section#create(['branch'])
+"    let g:airline_section_c = '%<%t%m'
+"    let g:airline_section_warning = airline#section#create(['syntastic'])
+"endfunction
+"autocmd VimEnter * if exists(':AirlineToggle') | call AirlineInit()
 
 
 " vim-cljfmt
 let g:clj_fmt_autosave = 1
+
+
+" ghc-mod
+map <silent> tw :GhcModTypeInsert<CR>
+map <silent> ts :GhcModSplitFunCase<CR>
+map <silent> tq :GhcModType<CR>
+map <silent> te :GhcModTypeClear<CR>
+
+
+" supertab
+let g:SuperTabDefaultCompletionType = '<c-x><c-o>'
+
+if has("gui_running")
+  imap <c-space> <c-r>=SuperTabAlternateCompletion("\<lt>c-x>\<lt>c-o>")<cr>
+else " no gui
+    if has("unix")
+        inoremap <Nul> <c-r>=SuperTabAlternateCompletion("\<lt>c-x>\<lt>c-o>")<cr>
+    endif
+endif
+
+let g:haskellmode_completion_ghc = 1
+autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+
+
+" tabularize
+let g:haskell_tabular = 1
+
+vmap a= :Tabularize /=<CR>
+vmap a; :Tabularize /::<CR>
+vmap a- :Tabularize /-><CR>
+
+
+" ctrl-p
+map <silent> <Leader>t :CtrlP()<CR>
+noremap <leader>b<space> :CtrlPBuffer<cr>
+let g:ctrlp_custom_ignore = '\v[\/]dist$'
+
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

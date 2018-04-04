@@ -1,85 +1,42 @@
-export PATH=/usr/local/bin:$PATH
+# Docker setup
+alias d="docker"
+alias dc="docker-compose"
+alias dm="docker-machine"
 
-###############################################################################
-# virtualenvwrapper
-###############################################################################
-export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/Devel
-source /usr/local/bin/virtualenvwrapper.sh
+# Emacs should run in Terminal
+alias emacs="emacs -nw"
 
-###############################################################################
-# postgres settings
-###############################################################################
-export PGDATA=/usr/local/pgsql/data
+# tmux OS X color reparation
+alias tmux="TERM=screen-256color-bce tmux"
 
-###############################################################################
-# PyPy
-###############################################################################
-alias pypy_easy_install="/usr/local/share/pypy/easy_install"
-alias pypy_pip="/usr/local/share/pypy/pip"
-
-###############################################################################
-# Prompt
-###############################################################################
-# I've already spent way too much time editing this, heh.
-PS1='[\[\e[0;95m\]\u\[\e[0;36m\]@\h:\[\e[0m\]\[\e[0;33m\]\W\[\e[0m\]] \t $\[\e[m\] '
-export PS1=$PS1
-
-# Just nice to know what colors look like on this platform/color scheme :)
-function color_list() {
-    echo -e "\x1B[31m[Red]\x1B[0m"
-    echo -e "\x1B[32m[Green]\x1B[0m"
-    echo -e "\x1B[33m[Yellow]\x1B[0m"
-    echo -e "\x1B[34m[Blue]\x1B[0m"
-    echo -e "\x1B[35m[Magenta]\x1B[0m"
-    echo -e "\x1B[36m[Cyan]\x1B[0m"
-    echo -e "\x1B[37m[Light Grey]\x1B[0m"
-    echo -e "\x1B[90m[Dark Grey]\x1B[0m"
-    echo -e "\x1B[91m[Light Red]\x1B[0m"
-    echo -e "\x1B[92m[Light Green]\x1B[0m"
-    echo -e "\x1B[93m[Light Yellow]\x1B[0m"
-    echo -e "\x1B[94m[Light Blue]\x1B[0m"
-    echo -e "\x1B[95m[Light Magenta]\x1B[0m"
-}
-export TERM=xterm-256color
-
-###############################################################################
-# Aliases go here #
-###############################################################################
-alias ls="ls -G"
-alias ll="ls -l"
-alias getwd='pwd | tr -d "\r\n" | pbcopy'
-alias supergrep="grep --color -n -C 2 -r"
-
-
-###############################################################################
-# Exports go here 
-###############################################################################
+# sensible terminal defaults
 export LANG=en_US.UTF-8
+export LC_ALL=$LANG
 
-###############################################################################
-# GOPATH exports go here
-###############################################################################
-export GOPATH=/Users/$USER/go
-export PATH=$PATH:$GOPATH/bin
+# Git prompt
+export GITAWAREPROMPT=~/.bash/git-aware-prompt
+source $GITAWAREPROMPT/main.sh
+export PS1="\u@\h \w \[$txtcyn\]\$git_branch\[$txtred\]\$git_dirty\[$txtrst\]\$ "
 
-###############################################################################
-# PYTHONPATH exports go here
-###############################################################################
-export PYTHONPATH=$PYTHONPATH:/Users/$USER/Documents
-export PYTHONPATH=$PYTHONPATH:/Users/$USER/perforce
-export PYTHONDONTWRITEBYTECODE=TRUE
+# customized MANPATH (accounts for erlang man pages)
+export MANPATH=$MANPATH:/usr/local/opt/erlang/lib/erlang/man
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+# JAVA variables
+#export JAVA_HOME=$(/usr/libexec/java_home)
+export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home"
 
-###############################################################################
-export PATH=/usr/local/bin:$PATH
-export PATH=/usr/local/sbin:$PATH
-export PATH=/usr/local/Cellar:$PATH
-###############################################################################
+# Haskell
+export HASKELL_BIN=/Users/shkodran/.stack/programs/x86_64-osx/ghc-7.8.4/bin
 
-source ~/.ursarc
+# Hadoop local stuff
+alias hstart="/usr/local/Cellar/hadoop/2.7.0/sbin/start-dfs.sh;/usr/local/Cellar/hadoop/2.7.0/sbin/start-yarn.sh"
+alias hstop="/usr/local/Cellar/hadoop/2.7.0/sbin/stop-yarn.sh;/usr/local/Cellar/hadoop/2.7.0/sbin/stop-dfs.sh"
 
-if [ -f ~/.git-completion.bash ]; then
-    . ~/.git-completion.bash
-fi
+# HOME bin
+HOME_BIN=/Users/shkodran/bin
+
+# HOME hidden bin
+HOME_LOCAL_BIN=/Users/shkodran/.local/bin
+
+# customized PATH
+export PATH=/usr/local/sbin:/usr/local/opt/go/libexec/bin:$PATH:$HOME_LOCAL_BIN:$HOME_BIN:$JAVA_HOME:$HASKELL_BIN
